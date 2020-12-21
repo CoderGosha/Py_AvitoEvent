@@ -26,7 +26,7 @@ class TelegramWorker:
         self.admins = configuration.config["ADMINS"]
         self.users_state = dict()
         self.storage_helper = StorageHelper()
-        self.updater = Updater(self.token_bot)
+        self.updater = Updater(self.token_bot, use_context=False)
 
         dp = self.updater.dispatcher
         dp.add_error_handler(on_error)
@@ -106,13 +106,13 @@ class TelegramWorker:
         update.message.reply_text(text)
         self.users_state[update.message.from_user.id] = dict()
 
-    @catch_exceptions
+   # @catch_exceptions
     @admin_check
     def new_user(self, bot, update):
         update.message.reply_text('Хорошо. Перешлите любое сообщение от нового пользователя')
         return ASKED_NEW_USER
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def new_user_add(self, bot, update):
         telegram_id = str(update.message.forward_from.id)
@@ -127,7 +127,7 @@ class TelegramWorker:
 
         return ConversationHandler.END
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def change_status_user(self, bot, update):
         users = self.storage_helper.get_stat_users()
@@ -138,7 +138,7 @@ class TelegramWorker:
             return ConversationHandler.END
         return ASKED_DEACTIVATE_USER
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def change_status_user_do(self, bot, update):
         telegram_id = update.message.text.split('/changestatus_')[-1]
@@ -146,13 +146,13 @@ class TelegramWorker:
         update.message.reply_text('Готово!')
         return ConversationHandler.END
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def new_link(self, bot, update):
         update.message.reply_text('Хорошо. Пришлите ссылку с авито')
         return ASKED_NEW_LINK
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def del_link(self, bot, update):
         parsers = self.storage_helper.get_link_parser()
@@ -164,7 +164,7 @@ class TelegramWorker:
 
         return ASKED_DEL_LINK
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def del_parser(self, bot, update):
         parser_id = update.message.text.split('/delparser_')[-1]
@@ -173,7 +173,7 @@ class TelegramWorker:
         update.message.reply_text('Ссылка удалена %s' % parser_id)
         return ConversationHandler.END
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def new_link_add(self, bot, update):
         url = update.message.text
@@ -182,7 +182,7 @@ class TelegramWorker:
         update.message.reply_text('Ссылка добавлена %s' % url)
         return ConversationHandler.END
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     def binduser(self, bot, update):
         users = self.storage_helper.get_stat_users()
@@ -193,7 +193,7 @@ class TelegramWorker:
             return ConversationHandler.END
         return ASKED_BIND_USER
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     @user_state_check
     def list_parser(self, bot, update):
@@ -209,7 +209,7 @@ class TelegramWorker:
         self.users_state[update.message.from_user.id]["current_bind"] = telegram_id
         return ASKED_PARSER
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     @user_state_check
     def bind_parser(self, bot, update):
@@ -222,7 +222,7 @@ class TelegramWorker:
         update.message.reply_text('Готово!')
         return ConversationHandler.END
 
-    @catch_exceptions
+    #@catch_exceptions
     @admin_check
     @user_state_check
     def unbind_parser(self, bot, update):

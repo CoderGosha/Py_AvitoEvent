@@ -12,12 +12,22 @@ def catch_exceptions(func):
         try:
             return func(worker, bot, update, *args, **kwargs)
         except Exception as e:
-            on_error(worker, bot, update, e)
+            on_error_legacy(worker, bot, update, e)
 
     return wrapper
 
 
-def on_error(worker, bot, update, error):
+def on_error(bot, update, error):
+    logging.error('Update "{}" caused error "{}"'.format(update, error))
+    traceback.print_exc()
+
+    if update is not None:
+        update.message.reply_text('Внутренняя ошибка')
+        update.message.reply_text('{}: {}'.format(type(error).__name__, str(error)))
+        update.message.reply_text('Сообщите @CoderGosha')
+
+
+def on_error_legacy(worker, bot, update, error):
     logging.error('Update "{}" caused error "{}"'.format(update, error))
     traceback.print_exc()
 
