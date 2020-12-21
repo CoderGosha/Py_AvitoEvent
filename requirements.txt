@@ -1,0 +1,6 @@
+lxml
+sqlalchemy
+python-telegram-bot==13.1
+pycurl
+selenium
+webdriver-manager

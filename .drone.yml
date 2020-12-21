@@ -1,0 +1,41 @@
+kind: pipeline
+type: exec
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+  
+steps:
+- name: build
+  commands:
+  - docker build -t avitoauto .
+
+- name: delete old containers
+  failure: ignore
+  commands:
+  - docker stop avitoauto;
+  - docker rm avitoauto;
+
+- name: publish
+  commands:
+  - docker run -d --restart=no -v /home/codergosha/ProdScript/avitoauto/static_files:/app/static_files -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name avitoauto avitoauto;
+
+---
+
+kind: pipeline
+type: docker
+name: notification
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: notification
+  pull: true
+  image: appleboy/drone-telegram
+  settings:
+    token:
+        from_secret: bot_token
+    to: -1001419585850

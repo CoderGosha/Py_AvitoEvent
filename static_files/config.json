@@ -1,0 +1,19 @@
+{
+  "DEFAULT": {
+    "DATABASE": {
+      "drivername": "sqlite",
+      "database": "static_files/avito_bot.sqlite"
+    }
+  },
+  "TELEGRAM": {
+    "BOT_TOKEN": "ВАШ ТОКЕН",
+    "CHAT_ID": "ЧАТ ДЛЯ ОШИБОК"
+  },
+  "HOUR_BEGIN": 5,
+  "HOUR_END": 21,
+  "ADMINS": [
+    ВАШ ТЕЛЕГРАМ ИД
+  ],
+  "TIMEOUT_MINUTES": 10,
+  "PROXY": ""
+}

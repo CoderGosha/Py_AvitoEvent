@@ -1,0 +1,10 @@
+__pycache__
+/ConfigBot.py
+/bot.log
+/.idea
+/venv
+/avito_bot.sqlite
+/log/*.log
+/static_files/avito_bot.sqlite
+*.log
+/static_files/config.mainserver.json
